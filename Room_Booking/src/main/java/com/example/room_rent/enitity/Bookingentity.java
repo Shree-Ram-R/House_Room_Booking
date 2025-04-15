@@ -2,7 +2,7 @@ package com.example.room_rent.enitity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.hibernate.engine.internal.Cascade;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -3,6 +3,8 @@ package com.example.room_rent.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
 
 import com.example.room_rent.dtos.Userdto;
 import com.example.room_rent.service.Userservice;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173",allowCredentials = "true")
 @RequestMapping("/users")
 public class Usercontroller {
     @Autowired
@@ -45,4 +49,21 @@ public class Usercontroller {
     {
         return uservice.delete(id);
     }
+      @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody Userdto userDto) {
+        String response = uservice.register(userDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Userdto userDto) {
+       String response= uservice.authenticate(userDto.getUsername(), userDto.getPassword());
+        return ResponseEntity.ok(response);
+    }
+
+    // @GetMapping("/")
+    // public List<UserSecureDto> getAll() {
+
+    //     return uservice.getAll();
+    // }
 }
