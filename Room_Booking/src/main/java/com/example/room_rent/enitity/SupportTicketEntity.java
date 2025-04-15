@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 public class SupportTicketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "t_id")
+   
+    
     private Integer tId;
 
     @ManyToOne
