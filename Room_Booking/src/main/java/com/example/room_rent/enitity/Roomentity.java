@@ -1,6 +1,6 @@
 package com.example.room_rent.enitity;
 
-import com.example.room_rent.dtos.Userdto;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;

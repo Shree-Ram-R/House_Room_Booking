@@ -50,6 +50,7 @@ public class SupportTicketService {
             ticket.getDatetime()
         )).collect(Collectors.toList());
     }
+    
     public Optional<SupportTicketDto> getTicketById(Integer id) {
         return supportTicketRepo.findById(id).map(ticket -> new SupportTicketDto(
             ticket.getTId(),
