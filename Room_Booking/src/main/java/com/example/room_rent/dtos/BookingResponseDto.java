@@ -1,6 +1,6 @@
 package com.example.room_rent.dtos;
 
-import jakarta.persistence.Column;
+
 
 import java.time.LocalDate;
 

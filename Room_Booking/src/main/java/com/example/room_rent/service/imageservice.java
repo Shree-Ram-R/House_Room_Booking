@@ -1,6 +1,6 @@
 package com.example.room_rent.service;
 import com.example.room_rent.dtos.imagedto;
-import com.example.room_rent.dtos.imagedto;
+
 import com.example.room_rent.enitity.Roomentity;
 import com.example.room_rent.enitity.imageentity;
 import com.example.room_rent.repository.Roomrepo;
