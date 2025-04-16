@@ -49,10 +49,6 @@ public class Roomdto{
         this.availability = availability;
         this.maxoccupancy = maxoccupancy;
     }
-    public Roomdto(Integer roomid2, String roomtype2, String location2, Float price2, Boolean isac2,
-            String description2, Boolean availability2, Integer maxoccupancy2, Userdto udto, Userdto udto1) {
-        //TODO Auto-generated constructor stub
-    }
     public Integer getRoomid() {
         return roomid;
     }
