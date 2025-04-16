@@ -76,6 +76,6 @@ public class SupportTicketService {
             supportTicketRepo.deleteById(id);
             return "Ticket deleted successfully";
         }
-        return "Ticket not found";
+        return "No Ticket found";
     }
 }
