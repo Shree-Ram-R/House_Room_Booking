@@ -1,8 +1,6 @@
 package com.example.room_rent.controller;
-
 import com.example.room_rent.dtos.SupportTicketDto;
 import com.example.room_rent.service.SupportTicketService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

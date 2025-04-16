@@ -2,8 +2,6 @@ package com.example.room_rent.dtos;
 
 import java.util.List;
 
-import com.example.room_rent.enitity.Roomentity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
