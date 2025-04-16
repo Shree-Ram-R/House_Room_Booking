@@ -28,9 +28,11 @@ public class SupportTicketDto {
         this.status = status;
         this.datetime = datetime;
     }
-    public SupportTicketDto(Integer tId,Userdto userdetails, String subject, String issueInDetail, String status, LocalDateTime datetime) {
+
+    public SupportTicketDto(Integer tId, String subject, String issueInDetail, String status, LocalDateTime datetime) {
         this.tId = tId;
-        this.userdetails = userdetails;
+
+   
         this.subject = subject;
         this.issueInDetail = issueInDetail;
         this.status = status;
@@ -92,5 +94,6 @@ public class SupportTicketDto {
     public void setUid(Integer uid) {
         this.uid = uid;
     }
+
     
 }
