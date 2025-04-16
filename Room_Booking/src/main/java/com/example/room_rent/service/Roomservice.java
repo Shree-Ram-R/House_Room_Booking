@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +27,7 @@ public class Roomservice {
         {
             Roomentity room = roome.get();
             Userentity user=room.getOwner();
-            Userdto udto=new Userdto(id, user.getName(), user.getPhone(), user.getEmail(), user.getPassword());
+            Userdto udto=new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword());
             return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy(),udto);
         }
         return new Roomdto(id, null, null, null, null, null, null, id, null);
@@ -101,7 +99,7 @@ public class Roomservice {
         e.setIsac(dt.getIsac());
         e.setLocation(dt.getLocation());
         e.setMaxoccupancy(dt.getMaxoccupancy());
-        Userentity user=urepo.findById(dt.getOwner().getUser_id()).orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOwner())); 
+        Userentity user=urepo.findById(dt.getOid()).orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOwner())); 
         e.setOwner(user);
         e.setPrice(dt.getPrice());
         e.setRoomid(dt.getRoomid());

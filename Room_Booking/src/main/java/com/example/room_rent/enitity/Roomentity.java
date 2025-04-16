@@ -1,8 +1,5 @@
 package com.example.room_rent.enitity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +26,7 @@ public class Roomentity {
     private Integer maxoccupancy;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
-    @JsonBackReference //to avoid infinite recursion(this matches to user and in user it again matches to room and goes on)
+    // @JsonBackReference //to avoid infinite recursion(this matches to user and in user it again matches to room and goes on)
     private Userentity owner;
     public Integer getRoomid() {
         return roomid;
@@ -85,4 +82,5 @@ public class Roomentity {
     public void setOwner(Userentity owner) {
         this.owner = owner;
     }
+
 }
