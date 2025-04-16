@@ -30,7 +30,13 @@ public class SupportTicketDto {
         this.status = status;
         this.datetime = datetime;
     }
+    public SupportTicketDto(Integer tId, String subject, String issueInDetail, String status, LocalDateTime datetime) {
+        this.tId = tId;
+        this.subject = subject;
+        this.issueInDetail = issueInDetail;
+        this.status = status;
+        this.datetime = datetime;
+    }
 
-    // Getters and Setters
-    // ...
+    
 }
