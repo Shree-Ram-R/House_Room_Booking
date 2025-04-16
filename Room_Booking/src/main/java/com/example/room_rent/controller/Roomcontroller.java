@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/room")
+@RequestMapping("/rooms")
 public class Roomcontroller {
     @Autowired
     private Roomservice rserv;
-    @GetMapping("/getroom/{id}")
+    @GetMapping("/{id}")
     public Roomdto rooms(@PathVariable Integer id) {
         return rserv.get(id);
     }
-    @GetMapping("/getall")
+    @GetMapping("/")
     public List<Roomdto> all() {
         return rserv.getAllRooms();
     }
@@ -37,15 +37,15 @@ public class Roomcontroller {
      public List<Roomdto> getMethodName(@PathVariable Integer id) {
          return rserv.getuser(id);
      }
-     @PostMapping("/addroom")
+     @PostMapping("/")
      public String postMethodName(@RequestBody Roomdto dt) {
         return this.rserv.add(dt);
      }
-     @PutMapping("updateroom/{id}")
+     @PutMapping("/{id}")
      public String putMethodName(@PathVariable Integer id, @RequestBody Roomdto dt) {
          return this.rserv.update(id, dt);
      }
-     @DeleteMapping("/deleteroom/{id}")
+     @DeleteMapping("/{id}")
      public String delete(@PathVariable Integer id)
      {
         return rserv.delete(id);

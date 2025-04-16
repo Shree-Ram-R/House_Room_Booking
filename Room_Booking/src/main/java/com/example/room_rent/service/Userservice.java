@@ -2,15 +2,20 @@ package com.example.room_rent.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.Userdto;
-import com.example.room_rent.entity.Roomentity;
-import com.example.room_rent.entity.Userentity;
+import com.example.room_rent.enitity.Roomentity;
+import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.Userrepo;
 
 @Service

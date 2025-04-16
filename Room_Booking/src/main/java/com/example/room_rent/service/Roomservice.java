@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.Userdto;
-import com.example.room_rent.entity.Roomentity;
-import com.example.room_rent.entity.Userentity;
+import com.example.room_rent.enitity.Roomentity;
+import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.Roomrepo;
 import com.example.room_rent.repository.Userrepo;
 
@@ -99,7 +99,7 @@ public class Roomservice {
         e.setIsac(dt.getIsac());
         e.setLocation(dt.getLocation());
         e.setMaxoccupancy(dt.getMaxoccupancy());
-        Userentity user=urepo.findById(dt.getOwner().getUser_id()).orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOwner())); 
+        Userentity user=urepo.findById(dt.getOid()).orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOwner())); 
         e.setOwner(user);
         e.setPrice(dt.getPrice());
         e.setRoomid(dt.getRoomid());
