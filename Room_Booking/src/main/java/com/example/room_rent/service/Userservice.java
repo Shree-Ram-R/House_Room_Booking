@@ -13,10 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.room_rent.dtos.Roomdto;
-import com.example.room_rent.dtos.SupportTicketDto;
 import com.example.room_rent.dtos.Userdto;
 import com.example.room_rent.enitity.Roomentity;
-import com.example.room_rent.enitity.SupportTicketEntity;
 import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.Userrepo;
 
@@ -48,14 +46,10 @@ public class Userservice {
         List<Userentity> entity=urep.findAll();
         return entity.stream().map(user->{
             List<Roomentity> urooms=user.getRooms();
-            List<SupportTicketEntity> tickets=user.getTickets();
-            List<SupportTicketDto> responsedto=tickets.stream().map(ticket->{
-                return new SupportTicketDto(ticket.gettId(),ticket.getSubject(),ticket.getIssueInDetail(),ticket.getStatus(),ticket.getDatetime());
-            }).collect(Collectors.toList());
             List<Roomdto> sample=urooms.stream().map(room->{
                  return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy());
             }).collect(Collectors.toList());
-            return new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),sample,responsedto);
+            return new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),sample);
         }).collect(Collectors.toList());
     }
     public Userdto gettingbyid(Integer id)
@@ -65,14 +59,10 @@ public class Userservice {
         {   
             Userentity data=uen.get();
             List<Roomentity> urooms=data.getRooms();
-            List<SupportTicketEntity> tickets=data.getTickets();
-            List<SupportTicketDto> responsedto=tickets.stream().map(ticket->{
-                return new SupportTicketDto(ticket.gettId(),ticket.getSubject(),ticket.getIssueInDetail(),ticket.getStatus(),ticket.getDatetime());
-            }).collect(Collectors.toList());
             List<Roomdto> sample=urooms.stream().map(room->{
                 return new Roomdto(room.getRoomid(),room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy());
             }).collect(Collectors.toList());
-            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample,responsedto);
+            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample);
         }
         return new Userdto(id, null, null, null, null);
     }

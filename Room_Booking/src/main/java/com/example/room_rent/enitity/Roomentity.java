@@ -3,13 +3,10 @@ package com.example.room_rent.enitity;
 import com.example.room_rent.dtos.Userdto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "room")
@@ -29,8 +26,21 @@ public class Roomentity {
     private Integer maxoccupancy;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
-    // @JsonBackReference //to avoid infinite recursion(this matches to user and in user it again matches to room and goes on)
+    @JsonBackReference //to avoid infinite recursion(this matches to user and in user it again matches to room and goes on)
     private Userentity owner;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Bookingentity> bookings;
+
+    public List<Bookingentity> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Bookingentity> bookings) {
+        this.bookings = bookings;
+    }
+
     public Integer getRoomid() {
         return roomid;
     }

@@ -101,7 +101,7 @@ public class Roomservice {
         e.setIsac(dt.getIsac());
         e.setLocation(dt.getLocation());
         e.setMaxoccupancy(dt.getMaxoccupancy());
-        Userentity user=urepo.findById(dt.getOid()).orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOwner())); 
+        Userentity user=urepo.findById(dt.getOwner().getUser_id()).orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOwner())); 
         e.setOwner(user);
         e.setPrice(dt.getPrice());
         e.setRoomid(dt.getRoomid());

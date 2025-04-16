@@ -22,28 +22,28 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class Usercontroller {
     @Autowired
     private Userservice uservice;
-    @PostMapping("/")
+    @PostMapping("/register")
     public String add(@RequestBody Userdto dt) {
         return this.uservice.adduser(dt);
     }
-    @GetMapping("/")
+    @GetMapping("/getalldetails")
     public List<Userdto> getMethodName() {
         return uservice.getall();
     }
-    @GetMapping("/{id}")
+    @GetMapping("/getoneuserdetails/{id}")
     public Userdto getone(@PathVariable Integer id) {
         return uservice.gettingbyid(id);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/updateuser/{id}")
     public String putMethodName(@PathVariable Integer id, @RequestBody Userdto updatevalue)
     {
         return uservice.update(id,updatevalue);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteuser/{id}")
     public String delete(@PathVariable Integer id)
     {
         return uservice.delete(id);

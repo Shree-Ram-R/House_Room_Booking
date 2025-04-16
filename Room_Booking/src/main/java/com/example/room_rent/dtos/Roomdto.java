@@ -23,14 +23,6 @@ public class Roomdto{
     @Column(name = "max_occupancy")
     private Integer maxoccupancy;
     private Userdto owner;
-    private Integer oid;
-    public Integer getOid() {
-        return oid;
-    }
-    public void setOid(Integer oid) {
-        this.oid = oid;
-    }
-    public Roomdto(){};
     public Roomdto(Integer roomid, String roomtype, String location, Float price, Boolean isac,
                    String description, Boolean availability, Integer maxoccupancy, Userdto owner) {
         this.roomid = roomid;

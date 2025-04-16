@@ -14,9 +14,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-// @JsonIdentityInfo(
-//   generator = ObjectIdGenerators.PropertyGenerator.class,
-//   property = "userid")
+//@JsonIdentityInfo(
+//  generator = ObjectIdGenerators.PropertyGenerator.class,
+//  property = "userid")
 @Entity
 @Table(name="USER")
 public class Userentity {
@@ -31,17 +31,23 @@ public class Userentity {
         private String email;
         private String password;
         @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-        // @JsonManagedReference   //to avoid infinite recursion(this matches to room and in room it again matches to user and goes on)
+        @JsonManagedReference   //to avoid infinite recursion(this matches to room and in room it again matches to user and goes on)
         private List<Roomentity> rooms;
-        @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
-        private List<SupportTicketEntity> tickets;
-        public List<SupportTicketEntity> getTickets() {
-            return tickets;
-        }
-        public void setTickets(List<SupportTicketEntity> tickets) {
-            this.tickets = tickets;
-        }
-        public String getName() {
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        @JsonManagedReference   //to avoid infinite recursion(this matches to room and in room it again matches to user and goes on)
+        private List<Bookingentity> booking;
+
+    public List<Bookingentity> getBooking() {
+        return booking;
+    }
+
+    public void setBooking(List<Bookingentity> booking) {
+        this.booking = booking;
+    }
+
+
+
+    public String getName() {
             return name;
         }
         public void setName(String name) {
