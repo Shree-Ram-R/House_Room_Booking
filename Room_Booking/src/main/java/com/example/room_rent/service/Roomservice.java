@@ -4,15 +4,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.management.relation.RelationNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.Userdto;
-import com.example.room_rent.enitity.Roomentity;
-import com.example.room_rent.enitity.Userentity;
+import com.example.room_rent.entity.Roomentity;
+import com.example.room_rent.entity.Userentity;
 import com.example.room_rent.repository.Roomrepo;
 import com.example.room_rent.repository.Userrepo;
 

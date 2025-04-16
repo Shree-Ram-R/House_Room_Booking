@@ -1,4 +1,4 @@
-package com.example.room_rent.enitity;
+package com.example.room_rent.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
