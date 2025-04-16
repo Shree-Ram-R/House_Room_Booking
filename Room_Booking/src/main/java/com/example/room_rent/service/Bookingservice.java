@@ -4,20 +4,20 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 
 import com.example.room_rent.dtos.BookingRequestDto;
-import com.example.room_rent.dtos.Roomdto;
+//import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.enitity.Bookingentity;
 import com.example.room_rent.enitity.Roomentity;
 import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.BookingRepository;
 import com.example.room_rent.repository.Roomrepo;
 import com.example.room_rent.repository.Userrepo;
-import org.apache.catalina.filters.ExpiresFilter;
+//import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
+//import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +26,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class BookingService {
+
     @Autowired
     private BookingRepository bookingRepo;
 
@@ -53,8 +54,9 @@ public class BookingService {
 
         room.setAvailability(false);  // Mark the room as unavailable
         roomRepo.save(room);
-
         Userentity user=optUser.get();
+
+
         //Roomentity room=optRoom.get();
 
 //        if(room.getAvailability()!=null || !room.getAvailability() ){
