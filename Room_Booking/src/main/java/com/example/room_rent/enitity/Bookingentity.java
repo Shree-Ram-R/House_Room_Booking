@@ -1,76 +1,90 @@
 package com.example.room_rent.enitity;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import org.hibernate.engine.internal.Cascade;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "booking")
+@Table(name="booking")
 public class Bookingentity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bookingId;
+    @Column(name = "Booking_id")
+    private int bookingid;
+    @Column(name = "start_date")
+    private LocalDate startdate;
+    @Column(name = "end_date")
+    private LocalDate enddate;
+    private String status;
+    private LocalDate booking_date;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();  // Set the current time when the entity is created
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="User_id")
+    @JsonBackReference
     private Userentity user;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="Room_id")
+    @JsonBackReference
     private Roomentity room;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalDate bookingDate;
-
-    private String status;
-
-    public Bookingentity() {
-
+    public int getBookingid() {
+        return bookingid;
     }
 
-    public Bookingentity(Integer bookingId, Userentity user, Roomentity room,
-            LocalDate startDate, LocalDate endDate, LocalDate bookingDate, String status) {
-        this.bookingId = bookingId;
-        this.user = user;
-        this.room = room;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bookingDate = bookingDate;
+    public void setBookingid(int bookingid) {
+        this.bookingid = bookingid;
+    }
+
+    public LocalDate getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(LocalDate startdate) {
+        this.startdate = startdate;
+    }
+
+    public LocalDate getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(LocalDate enddate) {
+        this.enddate = enddate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Bookingentity(Userentity user, Roomentity room,
-            LocalDate startDate, LocalDate endDate, LocalDate bookingDate, String status) {
-
-        this.user = user;
-        this.room = room;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bookingDate = bookingDate;
-        this.status = status;
+    public LocalDate getBooking_date() {
+        return booking_date;
     }
 
-    public Integer getBookingId() {
-        return bookingId;
+    public void setBooking_date(LocalDate booking_date) {
+        this.booking_date = booking_date;
     }
 
-    public void setBookingId(Integer bookingId) {
-        this.bookingId = bookingId;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public Userentity getUser() {
-        return user;
-    }
-
-    public void setUser(Userentity user) {
-        this.user = user;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Roomentity getRoom() {
@@ -81,35 +95,12 @@ public class Bookingentity {
         this.room = room;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Userentity getUser() {
+        return user;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public LocalDate getBookingDate() {
-        return bookingDate;
-    }
-
-    public void setBookingDate(LocalDate bookingDate) {
-        this.bookingDate = bookingDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setUser(Userentity user) {
+        this.user = user;
     }
 }
+

@@ -39,7 +39,7 @@ public class Paymentservice {
 
         return new Paymentdto(
             saved.getP_id(),
-            saved.getBooking().getBookingId(),
+            saved.getBooking().getBookingid(),
             saved.getAmount(),
             saved.getPaymentMethod(),
             saved.getPaymentStatus(),
@@ -51,7 +51,7 @@ public class Paymentservice {
         return prepo.findAll().stream()
             .map(payment -> new Paymentdto(
                 payment.getP_id(),
-                payment.getBooking().getBookingId(), 
+                payment.getBooking().getBookingid(), 
                 payment.getAmount(), 
                 payment.getPaymentMethod(), 
                 payment.getPaymentStatus(), 
@@ -66,7 +66,7 @@ public class Paymentservice {
         
         return new Paymentdto(
             payment.getP_id(),
-            payment.getBooking().getBookingId(),
+            payment.getBooking().getBookingid(),
             payment.getAmount(),
             payment.getPaymentMethod(),
             payment.getPaymentStatus(),
