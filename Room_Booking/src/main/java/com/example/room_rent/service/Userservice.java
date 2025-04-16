@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.room_rent.dtos.Roomdto;
+import com.example.room_rent.dtos.SupportTicketDto;
 import com.example.room_rent.dtos.Userdto;
 import com.example.room_rent.enitity.Roomentity;
+import com.example.room_rent.enitity.SupportTicketEntity;
 import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.Userrepo;
 
@@ -55,11 +57,16 @@ public class Userservice {
         if(uen.isPresent())
         {   
             Userentity data=uen.get();
+            List<SupportTicketEntity> utickets=data.getTickets();
             List<Roomentity> urooms=data.getRooms();
             List<Roomdto> sample=urooms.stream().map(room->{
                 return new Roomdto(room.getRoomid(),room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy());
             }).collect(Collectors.toList());
-            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample);
+            List<SupportTicketDto> sample1=utickets.stream().map(ticket->{
+                return new SupportTicketDto(ticket.gettId(),ticket.getSubject(), ticket.getIssueInDetail(), ticket.getStatus(), ticket.getDatetime());
+            }).collect(Collectors.toList());
+            
+            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample,sample1);
         }
         return new Userdto(id, null, null, null, null);
     }
