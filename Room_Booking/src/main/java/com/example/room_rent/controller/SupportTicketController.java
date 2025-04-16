@@ -26,10 +26,10 @@ public class SupportTicketController {
         return supportService.getAllTickets();
     }
     @GetMapping("/ticket/{id}")
-public ResponseEntity<SupportTicketDto> getTicketById(@PathVariable Integer id) {
-    return supportService.getTicketById(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+public SupportTicketDto getTicketById(@PathVariable Integer id) {
+    return supportService.getTicketById(id);
+        // .map(ResponseEntity::ok)
+        // .orElse(ResponseEntity.notFound().build());
 }
 
 // Delete ticket by ID

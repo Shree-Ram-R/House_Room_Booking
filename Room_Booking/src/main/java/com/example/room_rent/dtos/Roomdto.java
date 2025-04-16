@@ -1,7 +1,12 @@
 package com.example.room_rent.dtos;
+import com.example.room_rent.enitity.Userentity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 public class Roomdto{
     @Id
@@ -18,6 +23,14 @@ public class Roomdto{
     @Column(name = "max_occupancy")
     private Integer maxoccupancy;
     private Userdto owner;
+    private Integer oid;
+    public Integer getOid() {
+        return oid;
+    }
+    public void setOid(Integer oid) {
+        this.oid = oid;
+    }
+    public Roomdto(){};
     public Roomdto(Integer roomid, String roomtype, String location, Float price, Boolean isac,
                    String description, Boolean availability, Integer maxoccupancy, Userdto owner) {
         this.roomid = roomid;

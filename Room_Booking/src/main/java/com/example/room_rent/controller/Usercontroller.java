@@ -1,13 +1,13 @@
 package com.example.room_rent.controller;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
 
 import com.example.room_rent.dtos.Userdto;
-
+import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.service.Userservice;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,28 +22,28 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class Usercontroller {
     @Autowired
     private Userservice uservice;
-    @PostMapping("/register")
+    @PostMapping("/")
     public String add(@RequestBody Userdto dt) {
         return this.uservice.adduser(dt);
     }
-    @GetMapping("/getalldetails")
+    @GetMapping("/")
     public List<Userdto> getMethodName() {
         return uservice.getall();
     }
-    @GetMapping("/getoneuserdetails/{id}")
+    @GetMapping("/{id}")
     public Userdto getone(@PathVariable Integer id) {
         return uservice.gettingbyid(id);
     }
-    @PutMapping("/updateuser/{id}")
+    @PutMapping("/{id}")
     public String putMethodName(@PathVariable Integer id, @RequestBody Userdto updatevalue)
     {
         return uservice.update(id,updatevalue);
     }
-    @DeleteMapping("/deleteuser/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable Integer id)
     {
         return uservice.delete(id);
