@@ -2,7 +2,7 @@ package com.example.room_rent.dtos;
 
 import java.util.List;
 
-
+import com.example.room_rent.enitity.Roomentity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +26,13 @@ public class Userdto {
     private String email;
     private String password;
     private List<Roomdto> rooms;
+    private List<SupportTicketDto> tickets;
+    public List<SupportTicketDto> getTickets() {
+        return tickets;
+    }
+    public void setTickets(List<SupportTicketDto> tickets) {
+        this.tickets = tickets;
+    }
     public Userdto() {}
     public Userdto(Integer userid, String name, String phone, String email,String pass) {
         this.user_id = userid;
@@ -41,6 +48,15 @@ public class Userdto {
         this.email = email;
         this.password=pass;
         this.rooms=rooms;
+    }
+    public Userdto(Integer userid, String name, String phone, String email,String pass,List<Roomdto> rooms,List<SupportTicketDto> ticket) {
+        this.user_id = userid;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password=pass;
+        this.rooms=rooms;
+        this.tickets=ticket;
     }
     public Integer getUser_id() {
         return user_id;

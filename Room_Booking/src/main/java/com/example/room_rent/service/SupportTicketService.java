@@ -1,6 +1,7 @@
 package com.example.room_rent.service;
 
 import com.example.room_rent.dtos.SupportTicketDto;
+import com.example.room_rent.dtos.Userdto;
 import com.example.room_rent.enitity.SupportTicketEntity;
 import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.SupportTicketRepo;
@@ -23,11 +24,10 @@ public class SupportTicketService {
     private Userrepo userrepo;
 
     public String createTicket(SupportTicketDto dto) {
-        Optional<Userentity> userOpt = userrepo.findById(dto.getUserId());
+        Optional<Userentity> userOpt = userrepo.findById(dto.getUid());
         if (userOpt.isEmpty()) {
             return "User not found";
         }
-
         SupportTicketEntity ticket = new SupportTicketEntity();
         ticket.setUser(userOpt.get());
         ticket.setSubject(dto.getSubject());
@@ -41,25 +41,33 @@ public class SupportTicketService {
 
     public List<SupportTicketDto> getAllTickets() {
         List<SupportTicketEntity> entities = supportTicketRepo.findAll();
-        return entities.stream().map(ticket -> new SupportTicketDto(
-            ticket.getTId(),
-            ticket.getUser().getUserid(),
+        return entities.stream().map(ticket ->{
+        Userentity user=ticket.getUser();
+        Userdto details=new Userdto(user.getUserid(),user.getName(),user.getPhone(),user.getEmail(),user.getPassword());
+        return new SupportTicketDto(
+            ticket.gettId(),details,
             ticket.getSubject(),
             ticket.getIssueInDetail(),
             ticket.getStatus(),
-            ticket.getDatetime()
-        )).collect(Collectors.toList());
+            ticket.getDatetime());
+        }).collect(Collectors.toList());
     }
     
-    public Optional<SupportTicketDto> getTicketById(Integer id) {
-        return supportTicketRepo.findById(id).map(ticket -> new SupportTicketDto(
-            ticket.getTId(),
-            ticket.getUser().getUserid(),
-            ticket.getSubject(),
-            ticket.getIssueInDetail(),
-            ticket.getStatus(),
-            ticket.getDatetime()
-        ));
+    public SupportTicketDto getTicketById(Integer id) {
+        Optional<SupportTicketEntity> ticket=supportTicketRepo.findById(id);
+        if(ticket.isPresent())
+        {
+            SupportTicketEntity uticket =ticket.get();
+            Userentity user=uticket.getUser();
+            Userdto udto=new Userdto(user.getUserid(),user.getName(),user.getPhone(),user.getEmail(),user.getPassword());
+            return new SupportTicketDto(
+            uticket.gettId(),udto,
+            uticket.getSubject(),
+            uticket.getIssueInDetail(),
+            uticket.getStatus(),
+            uticket.getDatetime());
+        }
+        return null;
     }
     
     // Delete ticket by ID
