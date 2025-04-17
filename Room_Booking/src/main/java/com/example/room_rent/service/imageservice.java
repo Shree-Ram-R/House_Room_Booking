@@ -39,7 +39,7 @@ public class imageservice {
     }
 
     public List<imagedto> getImagesByRoomId(Integer roomId) {
-        List<imageentity> imageEntities = imagerepo.findByRoomId(roomId);
+        List<imageentity> imageEntities = imageRepository.findByRoom_Roomid(roomId);  // FIXED LINE
 
         // Convert imageentity to imagedto
         return imageEntities.stream().map(image -> new imagedto(

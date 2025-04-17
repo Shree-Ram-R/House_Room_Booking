@@ -2,7 +2,9 @@ package com.example.room_rent.controller;
 
 import com.example.room_rent.dtos.BookingRequestDto;
 import com.example.room_rent.enitity.Bookingentity;
+
 import com.example.room_rent.service.BookingService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class BookingController {
 
     @Autowired
+
     private BookingService bookingService;
+
 
     // Create a new booking
     @PostMapping("/create")
