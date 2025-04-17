@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.management.relation.RelationNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +27,7 @@ public class Roomservice {
         {
             Roomentity room = roome.get();
             Userentity user=room.getOwner();
-            Userdto udto=new Userdto(id, user.getName(), user.getPhone(), user.getEmail(), user.getPassword());
+            Userdto udto=new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword());
             return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy(),udto);
         }
         return new Roomdto(id, null, null, null, null, null, null, id, null);

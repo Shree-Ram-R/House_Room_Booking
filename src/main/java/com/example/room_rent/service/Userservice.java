@@ -48,14 +48,14 @@ public class Userservice {
         List<Userentity> entity=urep.findAll();
         return entity.stream().map(user->{
             List<Roomentity> urooms=user.getRooms();
-            List<SupportTicketEntity> tickets=user.getTickets();
-            List<SupportTicketDto> responsedto=tickets.stream().map(ticket->{
-                return new SupportTicketDto(ticket.gettId(),ticket.getSubject(),ticket.getIssueInDetail(),ticket.getStatus(),ticket.getDatetime());
-            }).collect(Collectors.toList());
             List<Roomdto> sample=urooms.stream().map(room->{
                  return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy());
             }).collect(Collectors.toList());
-            return new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),sample,responsedto);
+            List<SupportTicketEntity> ticket=user.getTickets();
+            List<SupportTicketDto> tickets=ticket.stream().map(tic ->{
+                return new SupportTicketDto(tic.gettId(),tic.getSubject(),tic.getIssueInDetail(),tic.getStatus(),tic.getDatetime());
+            }).collect(Collectors.toList());
+            return new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),sample,tickets);
         }).collect(Collectors.toList());
     }
     public Userdto gettingbyid(Integer id)
@@ -65,14 +65,10 @@ public class Userservice {
         {   
             Userentity data=uen.get();
             List<Roomentity> urooms=data.getRooms();
-            List<SupportTicketEntity> tickets=data.getTickets();
-            List<SupportTicketDto> responsedto=tickets.stream().map(ticket->{
-                return new SupportTicketDto(ticket.gettId(),ticket.getSubject(),ticket.getIssueInDetail(),ticket.getStatus(),ticket.getDatetime());
-            }).collect(Collectors.toList());
             List<Roomdto> sample=urooms.stream().map(room->{
                 return new Roomdto(room.getRoomid(),room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy());
             }).collect(Collectors.toList());
-            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample,responsedto);
+            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample);
         }
         return new Userdto(id, null, null, null, null);
     }
