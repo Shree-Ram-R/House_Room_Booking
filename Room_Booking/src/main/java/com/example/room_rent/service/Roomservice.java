@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.Userdto;
 import com.example.room_rent.enitity.Roomentity;
+//import com.example.room_rent.enitity.SupportTicketEntity;
 import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.Roomrepo;
+//import com.example.room_rent.repository.SupportTicketRepo;
 import com.example.room_rent.repository.Userrepo;
 
 @Service
@@ -20,15 +22,20 @@ public class Roomservice {
     private Roomrepo rrepo;
     @Autowired
     private Userrepo urepo;
+    // @Autowired
+    // private SupportTicketRepo sRepo;
     public Roomdto get(Integer id)
     {
         Optional<Roomentity> roome=rrepo.findById(id);
+        //Optional<SupportTicketEntity> ticket = sRepo.findById(id);
         if(roome.isPresent())
         {
+        //    / SupportTicketEntity tic=ticket.get();
+            
             Roomentity room = roome.get();
             Userentity user=room.getOwner();
-            Userdto udto=new Userdto(id, user.getName(), user.getPhone(), user.getEmail(), user.getPassword());
-            return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy(),udto);
+            Userdto udto=new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword());
+              return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy(),udto);
         }
         return new Roomdto(id, null, null, null, null, null, null, id, null);
     }

@@ -70,12 +70,12 @@ public class SupportTicketService {
         return null;
     }
     
-    // Delete ticket by ID
+    
     public String deleteTicket(Integer id) {
         if (supportTicketRepo.existsById(id)) {
             supportTicketRepo.deleteById(id);
             return "Ticket deleted successfully";
         }
-        return "Ticket not found";
+        return "No Ticket found";
     }
 }
