@@ -6,11 +6,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.SupportTicketDto;
+
 import com.example.room_rent.dtos.Userdto;
 import com.example.room_rent.enitity.Roomentity;
 import com.example.room_rent.enitity.SupportTicketEntity;
@@ -68,7 +69,7 @@ public class Userservice {
             
             return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample,sample1);
         }
-        return new Userdto(id, null, null, null, null);
+        return new Userdto(id, null, null, null, null,null,null);
     }
     public String update(Integer id,Userdto value)
     {
@@ -100,5 +101,43 @@ public class Userservice {
             return "error";
         }
     }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public String register(Userdto dto) {
+        if (urep.findByUsername(dto.getUsername()).isPresent()) {
+              throw new RuntimeException("User already exists");
+        }
+        if (urep.findByEmail(dto.getEmail()).isPresent()) {
+              throw new RuntimeException("Email already exists");
+        }
+
+        Userentity user = new Userentity();
+        Userdto usersecDto = new Userdto();
+        usersecDto.setUsername(dto.getUsername());
+        usersecDto.setEmail(dto.getEmail());
+        user.setName(dto.getName());
+        user.setPhone(dto.getPhone());
+        user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        urep.save(user);
+        return "User registered successfully!";
+    }
+    public String authenticate(String username, String password) {
+        Userentity user = urep.findByUsername(username)
+                .orElse( null);
+        if (user == null) {
+              throw new RuntimeException( "User not found");
+        }
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return "Logged In Successfully ";
+        } else {
+              throw new RuntimeException ("Invalid Password");
+        }
+    }
+    // public List<UserSecureDto> getAll() {
+    //     return urep.allUsers();
+    // }
 }
 
