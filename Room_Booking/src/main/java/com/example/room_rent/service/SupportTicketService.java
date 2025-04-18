@@ -52,25 +52,18 @@ public class SupportTicketService {
             ticket.getDatetime());
         }).collect(Collectors.toList());
     }
-    
-    public SupportTicketDto getTicketById(Integer id) {
-        Optional<SupportTicketEntity> ticket=supportTicketRepo.findById(id);
-        if(ticket.isPresent())
-        {
-            SupportTicketEntity uticket =ticket.get();
-            Userentity user=uticket.getUser();
-            Userdto udto=new Userdto(user.getUserid(),user.getName(),user.getPhone(),user.getEmail(),user.getPassword());
-            return new SupportTicketDto(
-            uticket.gettId(),udto,
-            uticket.getSubject(),
-            uticket.getIssueInDetail(),
-            uticket.getStatus(),
-            uticket.getDatetime());
-        }
-        return null;
+    public Optional<SupportTicketDto> getTicketById(Integer id) {
+        return supportTicketRepo.findById(id).map(ticket -> new SupportTicketDto(
+            ticket.gettId(),
+            ticket.getUser().getUserid(),
+            ticket.getSubject(),
+            ticket.getIssueInDetail(),
+            ticket.getStatus(),
+            ticket.getDatetime()
+        ));
     }
     
-    
+    // Delete ticket by ID
     public String deleteTicket(Integer id) {
         if (supportTicketRepo.existsById(id)) {
             supportTicketRepo.deleteById(id);

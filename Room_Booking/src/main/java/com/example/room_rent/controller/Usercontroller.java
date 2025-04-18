@@ -2,11 +2,12 @@ package com.example.room_rent.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-
 import com.example.room_rent.dtos.Userdto;
+
 import com.example.room_rent.service.Userservice;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

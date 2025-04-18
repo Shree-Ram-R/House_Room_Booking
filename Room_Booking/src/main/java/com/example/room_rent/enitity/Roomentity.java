@@ -1,5 +1,6 @@
 package com.example.room_rent.enitity;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
