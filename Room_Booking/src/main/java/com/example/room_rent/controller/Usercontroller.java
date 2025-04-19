@@ -2,12 +2,16 @@ package com.example.room_rent.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-
 import com.example.room_rent.dtos.Userdto;
+
 import com.example.room_rent.service.Userservice;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +60,9 @@ public class Usercontroller {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Userdto userDto) {
+    public ResponseEntity<String> login(@RequestBody Userdto userDto, HttpServletRequest request) {
        String response= uservice.authenticate(userDto.getUsername(), userDto.getPassword());
+       request.getSession(true);
         return ResponseEntity.ok(response);
     }
 

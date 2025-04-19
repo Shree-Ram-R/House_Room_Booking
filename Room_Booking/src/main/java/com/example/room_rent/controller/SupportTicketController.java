@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/support")
@@ -24,7 +25,7 @@ public class SupportTicketController {
         return supportService.getAllTickets();
     }
     @GetMapping("/ticket/{id}")
-public SupportTicketDto getTicketById(@PathVariable Integer id) {
+public Optional<SupportTicketDto> getTicketById(@PathVariable Integer id) {
     return supportService.getTicketById(id);
         // .map(ResponseEntity::ok)
         // .orElse(ResponseEntity.notFound().build());

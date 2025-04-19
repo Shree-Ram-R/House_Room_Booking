@@ -20,7 +20,6 @@ public class Userentity {
         @Column(name = "user_id")
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer userid;
-
         private String name;
         private String phone;
         @Column(unique = true)
