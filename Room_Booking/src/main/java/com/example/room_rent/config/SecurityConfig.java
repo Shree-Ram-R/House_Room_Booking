@@ -36,7 +36,7 @@ public class SecurityConfig {
             .and()
             .httpBasic().disable()
             .sessionManagement()
-            .maximumSessions(1);
+            .maximumSessions(10);
             // optional, depending on your auth method
     
         return http.build();
