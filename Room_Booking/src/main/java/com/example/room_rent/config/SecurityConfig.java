@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -20,13 +23,35 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .cors() // ✅ Enable CORS
+            .and()
             .csrf().disable()
             .authorizeHttpRequests()
-            .requestMatchers("/users/**").permitAll()
+            .requestMatchers(  "/users/**").permitAll()
             .anyRequest().authenticated()
             .and()
-            .httpBasic().disable(); // optional: can disable this if you're handling auth manually
-
+            .rememberMe()
+            .key("uniqueAndSecret")
+            .tokenValiditySeconds(24 * 60 * 60)
+            .and()
+            .httpBasic().disable()
+            .sessionManagement()
+            .maximumSessions(1);
+            // optional, depending on your auth method
+    
         return http.build();
+    }
+    
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true); // If using cookies
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
