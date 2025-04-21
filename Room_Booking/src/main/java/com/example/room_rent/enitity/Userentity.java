@@ -20,11 +20,19 @@ public class Userentity {
         @Column(name = "user_id")
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer userid;
-
         private String name;
         private String phone;
         @Column(unique = true)
         private String email;
+      
+        @Column(unique = true)
+        private String username;
+        public String getUsername() {
+            return username;
+        }
+        public void setUsername(String username) {
+            this.username = username;
+        }
         private String password;
         @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
         // @JsonManagedReference   //to avoid infinite recursion(this matches to room and in room it again matches to user and goes on)

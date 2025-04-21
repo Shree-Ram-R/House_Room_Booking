@@ -22,6 +22,14 @@ public class Userdto {
     private String phone;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String username;
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
     private String password;
     private List<Roomdto> rooms;
     private List<SupportTicketDto> tickets;
@@ -39,8 +47,22 @@ public class Userdto {
         this.tickets = tickets;
     }
     public Userdto() {}
-    public Userdto(Integer userid, String name, String phone, String email,String pass) {
+    public Userdto(String username,String pass) {
+        this.username = username;
+        this.password=pass;
+
+    }
+    public Userdto(Integer userid, String name, String phone, String email, String password) {
         this.user_id = userid;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+    }
+    
+    public Userdto(Integer userid, String name, String phone, String email,String username,String pass) {
+        this.user_id = userid;
+        this.username=username;
         this.name = name;
         this.phone = phone;
         this.email = email;

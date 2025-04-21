@@ -38,6 +38,11 @@ public class SupportTicketDto {
         this.datetime = datetime;
     }
 
+    public SupportTicketDto(Integer gettId, Integer userid, String subject2, String issueInDetail2, String status2,
+            LocalDateTime datetime2) {
+        //TODO Auto-generated constructor stub
+    }
+
     public Userdto getUserdetails() {
         return userdetails;
     }
