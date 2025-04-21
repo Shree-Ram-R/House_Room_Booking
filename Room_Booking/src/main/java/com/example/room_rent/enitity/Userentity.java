@@ -39,6 +39,14 @@ public class Userentity {
         private List<Roomentity> rooms;
         @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
         private List<SupportTicketEntity> tickets;
+        @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+        private List<Bookingentity> bookings;
+        public List<Bookingentity> getBookings() {
+            return bookings;
+        }
+        public void setBookings(List<Bookingentity> bookings) {
+            this.bookings = bookings;
+        }
         public List<SupportTicketEntity> getTickets() {
             return tickets;
         }
