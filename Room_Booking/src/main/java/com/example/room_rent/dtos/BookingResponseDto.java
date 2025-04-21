@@ -12,6 +12,28 @@ public class BookingResponseDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
+    private Userdto user;
+    private Roomdto room;
+    public Roomdto getRoom() {
+        return room;
+    }
+
+    public void setRoom(Roomdto room) {
+        this.room = room;
+    }
+
+    public BookingResponseDto(LocalDate bookingDate, int bookingId, int userId, int roomId, LocalDate startDate,
+            LocalDate endDate, String status, Userdto user,Roomdto room) {
+        this.bookingDate = bookingDate;
+        this.bookingId = bookingId;
+        this.userId = userId;
+        this.roomId = roomId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.user = user;
+        this.room=room;
+    }
 
     public LocalDate getBookingDate() {
         return bookingDate;
@@ -67,5 +89,13 @@ public class BookingResponseDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Userdto getUser() {
+        return user;
+    }
+
+    public void setUser(Userdto user) {
+        this.user = user;
     }
 }

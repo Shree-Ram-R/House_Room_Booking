@@ -1,14 +1,18 @@
 package com.example.room_rent.controller;
 
 import com.example.room_rent.dtos.BookingRequestDto;
+import com.example.room_rent.dtos.BookingResponseDto;
 import com.example.room_rent.enitity.Bookingentity;
 
-import com.example.room_rent.service.BookingService;
+import com.example.room_rent.service.Bookingservice;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -16,7 +20,7 @@ public class BookingController {
 
     @Autowired
 
-    private BookingService bookingService;
+    private Bookingservice bookingService;
 
 
     // Create a new booking
@@ -66,12 +70,21 @@ public class BookingController {
 
     // Get all bookings
     @GetMapping("/getAll")
-    public ResponseEntity<Iterable<Bookingentity>> getAllBookings() {
-        try {
-            Iterable<Bookingentity> bookings = bookingService.getAllBooking();
-            return ResponseEntity.status(HttpStatus.OK).body(bookings);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+    // public ResponseEntity<Iterable<Bookingentity>> getAllBookings() {
+    //     try {
+    //         Iterable<Bookingentity> bookings = bookingService.getAllBooking();
+    //         return ResponseEntity.status(HttpStatus.OK).body(bookings);
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    //     }
+    // }
+    public List<BookingResponseDto> getAllBooking(){
+        return bookingService.getAllBooking();
     }
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/getbyid/{id}")
+    public List<BookingResponseDto> getMethodName(@PathVariable Integer id) {
+        return bookingService.getbookingofid(id);
+    }
+    
 }

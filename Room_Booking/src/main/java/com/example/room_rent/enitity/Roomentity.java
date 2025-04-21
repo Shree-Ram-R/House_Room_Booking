@@ -1,5 +1,7 @@
 package com.example.room_rent.enitity;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,6 +34,12 @@ public class Roomentity {
     @JoinColumn(name = "owner_id")
     // @JsonBackReference //to avoid infinite recursion(this matches to user and in user it again matches to room and goes on)
     private Userentity owner;
+    @OneToMany(mappedBy = "room",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Bookingentity> rented;
+
+    @OneToMany(mappedBy = "room",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<imageentity> images;
+    
     public Integer getRoomid() {
         return roomid;
     }
@@ -84,6 +93,18 @@ public class Roomentity {
     }
     public void setOwner(Userentity owner) {
         this.owner = owner;
+    }
+    public List<Bookingentity> getRented() {
+        return rented;
+    }
+    public void setRented(List<Bookingentity> rented) {
+        this.rented = rented;
+    }
+    public List<imageentity> getImages() {
+        return images;
+    }
+    public void setImages(List<imageentity> images) {
+        this.images = images;
     }
 
 }
