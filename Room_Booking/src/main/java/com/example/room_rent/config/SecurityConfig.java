@@ -23,22 +23,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors() // ✅ Enable CORS
+            .cors()
             .and()
             .csrf().disable()
             .authorizeHttpRequests()
-            .requestMatchers(  "/users/**").permitAll()
+            //.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .requestMatchers( "/users/**").permitAll()
             .anyRequest().authenticated()
+            .and()
+            .formLogin() 
+            //.loginProcessingUrl("/auth/login")
+            .permitAll()
             .and()
             .rememberMe()
             .key("uniqueAndSecret")
             .tokenValiditySeconds(24 * 60 * 60)
             .and()
-            .httpBasic().disable()
             .sessionManagement()
             .maximumSessions(10);
-            // optional, depending on your auth method
-    
         return http.build();
     }
     

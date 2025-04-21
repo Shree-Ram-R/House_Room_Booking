@@ -53,22 +53,29 @@ public class Usercontroller {
     {
         return uservice.delete(id);
     }
-      @PostMapping("/signup")
+    @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody Userdto userDto) {
-        String response = uservice.register(userDto);
-        return ResponseEntity.ok(response);
+        String rsponse=uservice.register(userDto);
+        System.out.println(rsponse);
+        return ResponseEntity.ok(rsponse);
     }
-
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Userdto userDto, HttpServletRequest request) {
-       String response= uservice.authenticate(userDto.getUsername(), userDto.getPassword());
-       request.getSession(true);
-        return ResponseEntity.ok(response);
-    }
+    public int  login(@RequestBody Userdto userDto, HttpServletRequest request) {
+        
+            int response = uservice.authenticate(userDto.getUsername(), userDto.getPassword());
+            //System.out.println(response.getStatusCode());
+    
+            if(response!=-1){
+                System.out.print("Success");
+                return response;
+            } else {
+                return -1;
+            }
 
     // @GetMapping("/")
     // public List<UserSecureDto> getAll() {
 
     //     return uservice.getAll();
     // }
+}
 }

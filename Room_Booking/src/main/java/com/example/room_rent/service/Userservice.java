@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import com.example.room_rent.enitity.Roomentity;
 import com.example.room_rent.enitity.SupportTicketEntity;
 import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.Userrepo;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class Userservice {
@@ -105,35 +108,44 @@ public class Userservice {
 
     public String register(Userdto dto) {
         if (urep.findByUsername(dto.getUsername()).isPresent()) {
-              throw new RuntimeException("User already exists");
+            throw new RuntimeException ("User already exists");
         }
         if (urep.findByEmail(dto.getEmail()).isPresent()) {
-              throw new RuntimeException("Email already exists");
+            throw new RuntimeException("Email already exists");
         }
 
         Userentity user = new Userentity();
         Userdto usersecDto = new Userdto();
         usersecDto.setUsername(dto.getUsername());
         usersecDto.setEmail(dto.getEmail());
-        user.setName(dto.getName());
-        user.setPhone(dto.getPhone());
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        //user.setIsloggedin("false");
         urep.save(user);
+        //.updateUserLoggedInStatus(dto.getUsername(), "false");
+       // usersecDto.setIsLoggedIn("false");
+        
         return "User registered successfully!";
     }
-    public String authenticate(String username, String password) {
-        Userentity user = urep.findByUsername(username)
-                .orElse( null);
+    @Transactional
+    public int authenticate(String username, String password) {
+        System.out.println("Authenticating user: " + username);
+        Userentity user = urep.findByUsername(username).orElse(null);
+        
         if (user == null) {
-              throw new RuntimeException( "User not found");
+            System.out.println("Login failed - username not found: " + username);
+            return -1;
         }
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            return "Logged In Successfully ";
-        } else {
-              throw new RuntimeException ("Invalid Password");
+    
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("Login failed - invalid password for user: " + username);
+            return -1;
         }
+        //user.setIsloggedin("true");
+
+        //urep.updateUserLoggedInStatus(username, "false");
+        return user.getUserid();
     }
     // public List<UserSecureDto> getAll() {
     //     return urep.allUsers();
