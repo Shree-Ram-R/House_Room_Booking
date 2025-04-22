@@ -43,9 +43,6 @@ public class Roomentity {
     private Userentity owner;
 
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<imageentity> images = new ArrayList<>();
-
     @OneToMany(mappedBy = "room",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Bookingentity> rented;
 
@@ -136,11 +133,5 @@ public class Roomentity {
         this.images = images;
     }
 
-    public List<imageentity> getImages() {
-        return images;
-    }
-
-    public void setImages(List<imageentity> images) {
-        this.images = images;
-    }
+   
 }

@@ -6,6 +6,14 @@ public class ImageUploadDTO {
     private MultipartFile file;
     private Integer roomId;
 
+    public ImageUploadDTO(int id, String imgUrl, Integer roomid2) {
+        //TODO Auto-generated constructor stub
+    }
+
+    public ImageUploadDTO() {
+        //TODO Auto-generated constructor stub
+    }
+
     // Getters and Setters
     public MultipartFile getFile() {
         return file;
