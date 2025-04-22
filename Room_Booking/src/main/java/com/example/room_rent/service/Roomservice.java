@@ -9,9 +9,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.room_rent.dtos.ImageUploadDTO;
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.Userdto;
-import com.example.room_rent.dtos.imagedto;
+
 import com.example.room_rent.enitity.Bookingentity;
 import com.example.room_rent.enitity.Roomentity;
 //import com.example.room_rent.enitity.SupportTicketEntity;
@@ -40,8 +41,8 @@ public class Roomservice {
             Roomentity room = roome.get();
             List<imageentity> image=room.getImages();
             List<Bookingentity> bookings=room.getRented();
-            List<imagedto> images=image.stream().map( im->{
-                return new imagedto(im.getId(),im.getImgUrl(), im.getRoom().getRoomid());
+            List<ImageUploadDTO> images=image.stream().map( im->{
+                return new ImageUploadDTO(im.getId(),im.getImgUrl(), im.getRoom().getRoomid());
             }).collect(Collectors.toList());
             List<Userentity> rented=bookings.stream().map(book->{
                 return book.getUser();
@@ -67,8 +68,8 @@ public class Roomservice {
     return roomEntities.stream().map(room -> {
         List<Bookingentity> bookings=room.getRented();
         List<imageentity> image=room.getImages();
-        List<imagedto> images=image.stream().map( im->{
-            return new imagedto(im.getId(),im.getImgUrl(), im.getRoom().getRoomid());
+        List<ImageUploadDTO> images=image.stream().map( im->{
+            return new ImageUploadDTO(im.getId(),im.getImgUrl(), im.getRoom().getRoomid());
         }).collect(Collectors.toList());
         List<Userentity> rented=bookings.stream().map(book->{
             return book.getUser();

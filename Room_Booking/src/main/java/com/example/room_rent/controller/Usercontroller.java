@@ -39,7 +39,6 @@ public class Usercontroller {
     public List<Userdto> getMethodName() {
         return uservice.getall();
     }
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/{id}")
     public Userdto getone(@PathVariable Integer id) {
         return uservice.gettingbyid(id);

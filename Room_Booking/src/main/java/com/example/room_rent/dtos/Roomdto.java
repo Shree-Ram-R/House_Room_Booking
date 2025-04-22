@@ -35,7 +35,7 @@ public class Roomdto{
     private Integer oid;
 
     private List<Userdto> renteduser;
-    private List<imagedto> images;
+    private List<ImageUploadDTO> images;
 
     public Integer getOid() {
         return oid;
@@ -46,7 +46,7 @@ public class Roomdto{
     
     public Roomdto(Integer roomid, String roomtype, String location, Float price, Boolean isac, String description,
             Boolean availability, Integer maxoccupancy, Userdto owner, List<Userdto> renteduser,
-            List<imagedto> images) {
+            List<ImageUploadDTO> images) {
         this.roomid = roomid;
         this.roomtype = roomtype;
         this.location = location;
@@ -156,10 +156,10 @@ public class Roomdto{
     public void setRenteduser(List<Userdto> renteduser) {
         this.renteduser = renteduser;
     }
-    public List<imagedto> getImages() {
+    public List<ImageUploadDTO> getImages() {
         return images;
     }
-    public void setImages(List<imagedto> images) {
+    public void setImages(List<ImageUploadDTO> images) {
         this.images = images;
     }
 }
