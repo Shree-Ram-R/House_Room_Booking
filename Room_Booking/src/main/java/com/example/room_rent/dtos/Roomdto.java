@@ -7,18 +7,29 @@ public class Roomdto{
     @Id
     @Column(name = "room_id")
     private Integer roomid;
+
+    
     @Column(name = "room_type")
     private String roomtype;
+
     private String location;
+
     private Float  price;
+
     @Column(name="is_ac")
     private Boolean isac;
+
     private String description;
+
     private Boolean availability;
+
     @Column(name = "max_occupancy")
     private Integer maxoccupancy;
+
     private Userdto owner;
+
     private Integer oid;
+
     public Integer getOid() {
         return oid;
     }

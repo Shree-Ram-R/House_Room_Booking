@@ -1,9 +1,10 @@
 package com.example.room_rent.controller;
 
 import com.example.room_rent.dtos.BookingRequestDto;
+import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.enitity.Bookingentity;
 
-import com.example.room_rent.service.BookingService;
+import com.example.room_rent.service.Bookingservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class BookingController {
 
     @Autowired
 
-    private BookingService bookingService;
+    private Bookingservice bookingService;
 
 
     // Create a new booking
@@ -74,4 +75,11 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
+    @PostMapping("/addroom")
+    public ResponseEntity<?> addRoom(@RequestBody Roomdto dt) {
+    System.out.println("Received DTO: " + dt);
+    System.out.println("OID received: " + dt.getOid());  // 👈 Check if this prints null
+    return null;
+}
 }

@@ -26,7 +26,7 @@ import java.util.Optional;
 @Service
 @Transactional
 
-public class BookingService {
+public class Bookingservice {
 
     @Autowired
     private BookingRepository bookingRepo;
