@@ -2,20 +2,25 @@ package com.example.room_rent.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.room_rent.dtos.BookingResponseDto;
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.SupportTicketDto;
+
 import com.example.room_rent.dtos.Userdto;
+import com.example.room_rent.enitity.Bookingentity;
 import com.example.room_rent.enitity.Roomentity;
 import com.example.room_rent.enitity.SupportTicketEntity;
 import com.example.room_rent.enitity.Userentity;
 import com.example.room_rent.repository.Userrepo;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class Userservice {
@@ -48,7 +53,18 @@ public class Userservice {
             List<Roomdto> sample=urooms.stream().map(room->{
                  return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy());
             }).collect(Collectors.toList());
-            return new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),sample);
+            List<SupportTicketEntity> tickets=user.getTickets();
+            List<SupportTicketDto> ticket=tickets.stream().map(tic ->{
+                return new SupportTicketDto(tic.gettId(),tic.getSubject(),tic.getIssueInDetail(),tic.getStatus(),tic.getDatetime());
+            }).collect(Collectors.toList());
+            List<Bookingentity> booking=user.getBookings();
+            List<BookingResponseDto> res=booking.stream().map
+            ( book->{
+                Roomentity room=book.getRoom();
+                Roomdto dto=new Roomdto(room.getRoomid(),room.getRoomtype(),room.getLocation(),room.getPrice(),room.getIsac(),room.getDescription(),room.getAvailability(),room.getMaxoccupancy());
+                return new BookingResponseDto(book.getBooking_date(), book.getBookingid(), 0, 0, book.getStartdate(), book.getEnddate(), book.getStatus(), null,dto);
+            }).collect(Collectors.toList());
+            return new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),sample,ticket,res);
         }).collect(Collectors.toList());
     }
     public Userdto gettingbyid(Integer id)
@@ -59,6 +75,13 @@ public class Userservice {
             Userentity data=uen.get();
             List<SupportTicketEntity> utickets=data.getTickets();
             List<Roomentity> urooms=data.getRooms();
+            List<Bookingentity> booking=data.getBookings();
+            List<BookingResponseDto> res=booking.stream().map
+            ( book->{
+                Roomentity room=book.getRoom();
+                Roomdto dto=new Roomdto(room.getRoomid(),room.getRoomtype(),room.getLocation(),room.getPrice(),room.getIsac(),room.getDescription(),room.getAvailability(),room.getMaxoccupancy());
+                return new BookingResponseDto(book.getBooking_date(), book.getBookingid(), 0, 0, book.getStartdate(), book.getEnddate(), book.getStatus(), null,dto);
+            }).collect(Collectors.toList());
             List<Roomdto> sample=urooms.stream().map(room->{
                 return new Roomdto(room.getRoomid(),room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy());
             }).collect(Collectors.toList());
@@ -66,9 +89,9 @@ public class Userservice {
                 return new SupportTicketDto(ticket.gettId(),ticket.getSubject(), ticket.getIssueInDetail(), ticket.getStatus(), ticket.getDatetime());
             }).collect(Collectors.toList());
             
-            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample,sample1);
+            return new Userdto(id, data.getName(), data.getPhone(), data.getEmail(), data.getPassword(),sample,sample1,res);
         }
-        return new Userdto(id, null, null, null, null);
+        return new Userdto(id, null, null, null, null,null,null);
     }
     public String update(Integer id,Userdto value)
     {
@@ -100,5 +123,52 @@ public class Userservice {
             return "error";
         }
     }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public String register(Userdto dto) {
+        if (urep.findByUsername(dto.getUsername()).isPresent()) {
+            throw new RuntimeException ("User already exists");
+        }
+        if (urep.findByEmail(dto.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        Userentity user = new Userentity();
+        Userdto usersecDto = new Userdto();
+        usersecDto.setUsername(dto.getUsername());
+        usersecDto.setEmail(dto.getEmail());
+        user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        //user.setIsloggedin("false");
+        urep.save(user);
+        //.updateUserLoggedInStatus(dto.getUsername(), "false");
+       // usersecDto.setIsLoggedIn("false");
+        
+        return "User registered successfully!";
+    }
+    @Transactional
+    public int authenticate(String username, String password) {
+        System.out.println("Authenticating user: " + username);
+        Userentity user = urep.findByUsername(username).orElse(null);
+        
+        if (user == null) {
+            System.out.println("Login failed - username not found: " + username);
+            return -1;
+        }
+    
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("Login failed - invalid password for user: " + username);
+            return -1;
+        }
+        //user.setIsloggedin("true");
+
+        //urep.updateUserLoggedInStatus(username, "false");
+        return user.getUserid();
+    }
+    // public List<UserSecureDto> getAll() {
+    //     return urep.allUsers();
+    // }
 }
 

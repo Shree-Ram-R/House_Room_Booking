@@ -4,14 +4,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.room_rent.dtos.Roomdto;
 import com.example.room_rent.dtos.Userdto;
+import com.example.room_rent.dtos.imagedto;
+import com.example.room_rent.enitity.Bookingentity;
 import com.example.room_rent.enitity.Roomentity;
 //import com.example.room_rent.enitity.SupportTicketEntity;
 import com.example.room_rent.enitity.Userentity;
+import com.example.room_rent.enitity.imageentity;
 import com.example.room_rent.repository.Roomrepo;
 //import com.example.room_rent.repository.SupportTicketRepo;
 import com.example.room_rent.repository.Userrepo;
@@ -33,9 +38,23 @@ public class Roomservice {
         //    / SupportTicketEntity tic=ticket.get();
             
             Roomentity room = roome.get();
+            List<imageentity> image=room.getImages();
+            List<Bookingentity> bookings=room.getRented();
+            List<imagedto> images=image.stream().map( im->{
+                return new imagedto(im.getId(),im.getImgUrl(), im.getRoom().getRoomid());
+            }).collect(Collectors.toList());
+            List<Userentity> rented=bookings.stream().map(book->{
+                return book.getUser();
+            }).collect(Collectors.toList());
+            List<Userdto> renteduser= rented.stream().map(
+                ruser->{
+                    return new Userdto(ruser.getUserid(), ruser.getName(),ruser.getPhone(), ruser.getEmail(), ruser.getPassword());
+                }
+            ).collect(Collectors.toList());
             Userentity user=room.getOwner();
             Userdto udto=new Userdto(user.getUserid(), user.getName(), user.getPhone(), user.getEmail(), user.getPassword());
-              return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy(),udto);
+              return new Roomdto(room.getRoomid(), room.getRoomtype(), room.getLocation(), room.getPrice(), room.getIsac(), room.getDescription(), room.getAvailability(), room.getMaxoccupancy(),udto,renteduser,
+              images);
         }
         return new Roomdto(id, null, null, null, null, null, null, id, null);
     }
@@ -45,8 +64,20 @@ public class Roomservice {
     // }
     public List<Roomdto> getAllRooms() {
     List<Roomentity> roomEntities = rrepo.findAll();
-
     return roomEntities.stream().map(room -> {
+        List<Bookingentity> bookings=room.getRented();
+        List<imageentity> image=room.getImages();
+        List<imagedto> images=image.stream().map( im->{
+            return new imagedto(im.getId(),im.getImgUrl(), im.getRoom().getRoomid());
+        }).collect(Collectors.toList());
+        List<Userentity> rented=bookings.stream().map(book->{
+            return book.getUser();
+        }).collect(Collectors.toList());
+        List<Userdto> renteduser= rented.stream().map(
+            ruser->{
+                return new Userdto(ruser.getUserid(), ruser.getName(),ruser.getPhone(), ruser.getEmail(), ruser.getPassword());
+            }
+        ).collect(Collectors.toList());
         Userentity user = room.getOwner();
         Userdto userDTO = new Userdto(
             user.getUserid(),
@@ -65,7 +96,9 @@ public class Roomservice {
             room.getDescription(),
             room.getAvailability(),
             room.getMaxoccupancy(),
-            userDTO
+            userDTO,
+            renteduser,
+            images
         );
     }).collect(Collectors.toList());
 }
@@ -76,6 +109,15 @@ public class Roomservice {
         List<Roomentity> roomEntities = rrepo.findByowner_userid(id);
 
     return roomEntities.stream().map(room -> {
+        List<Bookingentity> bookings=room.getRented();
+        List<Userentity> rented=bookings.stream().map(book->{
+            return book.getUser();
+        }).collect(Collectors.toList());
+        List<Userdto> renteduser= rented.stream().map(
+            ruser->{
+                return new Userdto(ruser.getUserid(), ruser.getName(),ruser.getPhone(), ruser.getEmail(), ruser.getPassword());
+            }
+        ).collect(Collectors.toList());
         Userentity user = room.getOwner();
         Userdto userDTO = new Userdto(
             user.getUserid(),
@@ -94,7 +136,8 @@ public class Roomservice {
             room.getDescription(),
             room.getAvailability(),
             room.getMaxoccupancy(),
-            userDTO
+            userDTO,
+            renteduser
         );
     }).collect(Collectors.toList());
     }

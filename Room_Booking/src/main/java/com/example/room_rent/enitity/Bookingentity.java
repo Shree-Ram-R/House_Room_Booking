@@ -35,8 +35,8 @@ public class Bookingentity {
     private Userentity user;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="Room_id")
-    @JsonBackReference
+    @JoinColumn(name="room_id")
+    // @JsonBackReference
     private Roomentity room;
 
     public int getBookingid() {

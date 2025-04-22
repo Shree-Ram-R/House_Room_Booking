@@ -22,9 +22,24 @@ public class Userdto {
     private String phone;
     @Column(unique = true)
     private String email;
+    @Column(unique = true)
+    private String username;
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
     private String password;
     private List<Roomdto> rooms;
     private List<SupportTicketDto> tickets;
+    private List<BookingResponseDto> booking;
+    public List<BookingResponseDto> getBooking() {
+        return booking;
+    }
+    public void setBooking(List<BookingResponseDto> booking) {
+        this.booking = booking;
+    }
     public List<SupportTicketDto> getTickets() {
         return tickets;
     }
@@ -32,8 +47,22 @@ public class Userdto {
         this.tickets = tickets;
     }
     public Userdto() {}
-    public Userdto(Integer userid, String name, String phone, String email,String pass) {
+    public Userdto(String username,String pass) {
+        this.username = username;
+        this.password=pass;
+
+    }
+    public Userdto(Integer userid, String name, String phone, String email, String password) {
         this.user_id = userid;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+    }
+    
+    public Userdto(Integer userid, String name, String phone, String email,String username,String pass) {
+        this.user_id = userid;
+        this.username=username;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -55,6 +84,18 @@ public class Userdto {
         this.password=pass;
         this.rooms=rooms;
         this.tickets=ticket;
+    }
+    
+    public Userdto(Integer user_id, String name, String phone, String email, String password, List<Roomdto> rooms,
+            List<SupportTicketDto> tickets, List<BookingResponseDto> booking) {
+        this.user_id = user_id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.rooms = rooms;
+        this.tickets = tickets;
+        this.booking = booking;
     }
     public Integer getUser_id() {
         return user_id;
