@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface imagerepo extends JpaRepository<imageentity, Integer> {
+public interface imagerepo extends JpaRepository<imageentity,Integer> {
      List<imageentity> findByRoom_Roomid(Integer roomid);
 }

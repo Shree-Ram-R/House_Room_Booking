@@ -1,12 +1,19 @@
 package com.example.room_rent.controller;
 
 import com.example.room_rent.dtos.BookingRequestDto;
+
+import com.example.room_rent.dtos.Roomdto;
+import com.example.room_rent.enitity.Bookingentity;
+
+import com.example.room_rent.service.Bookingservice;
+
 import com.example.room_rent.dtos.BookingResponseDto;
 import com.example.room_rent.enitity.Bookingentity;
 
 import com.example.room_rent.service.Bookingservice;
 
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,5 +93,13 @@ public class BookingController {
     public List<BookingResponseDto> getMethodName(@PathVariable Integer id) {
         return bookingService.getbookingofid(id);
     }
-    
+
+
+    @PostMapping("/addroom")
+    public ResponseEntity<?> addRoom(@RequestBody Roomdto dt) {
+    System.out.println("Received DTO: " + dt);
+    System.out.println("OID received: " + dt.getOid());  // 👈 Check if this prints null
+    return null;
+}
+
 }

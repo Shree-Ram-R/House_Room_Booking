@@ -141,22 +141,49 @@ public class Roomservice {
         );
     }).collect(Collectors.toList());
     }
-    public String add(Roomdto dt)
-    {
-        Roomentity e=new Roomentity();
-        e.setAvailability(dt.getAvailability());
+    // public Roomentity add(Roomdto dt) {
+    //     Roomentity e = new Roomentity();
+    //     e.setAvailability(dt.getAvailability());
+    //     e.setDescription(dt.getDescription());
+    //     e.setIsac(dt.getIsac());
+    //     e.setLocation(dt.getLocation());
+    //     e.setMaxoccupancy(dt.getMaxoccupancy());
+    
+    //     Userentity user = urepo.findById(dt.getOid())
+    //         .orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOid()));
+    
+    //     e.setOwner(user);
+    //     e.setPrice(dt.getPrice());
+    //     e.setRoomtype(dt.getRoomtype());
+    
+    //     return rrepo.save(e); // Let the database generate room ID
+    // }
+    public Roomentity add(Roomdto dt) {
+        if (dt.getOid() == null) {
+            throw new IllegalArgumentException("Owner ID cannot be null");
+        }
+        
+        Roomentity e = new Roomentity();
+        e.setAvailability(dt.getAvailability() != null ? dt.getAvailability() : true);
         e.setDescription(dt.getDescription());
-        e.setIsac(dt.getIsac());
+        e.setIsac(dt.getIsac() != null ? dt.getIsac() : false);
         e.setLocation(dt.getLocation());
         e.setMaxoccupancy(dt.getMaxoccupancy());
-        Userentity user=urepo.findById(dt.getOid()).orElseThrow(() -> new RuntimeException("User not found with id " + dt.getOwner())); 
-        e.setOwner(user);
+        
+        // Check if user exists
+        Optional<Userentity> userOpt = urepo.findById(dt.getOid());
+        if (!userOpt.isPresent()) {
+            throw new RuntimeException("User not found with id " + dt.getOid());
+        }
+        
+        e.setOwner(userOpt.get());
         e.setPrice(dt.getPrice());
-        e.setRoomid(dt.getRoomid());
         e.setRoomtype(dt.getRoomtype());
-        rrepo.save(e);
-        return "added";
+        
+        return rrepo.save(e);
     }
+    
+
     public String delete(Integer id)
     {
         try{
